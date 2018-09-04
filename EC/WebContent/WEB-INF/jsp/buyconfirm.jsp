@@ -38,17 +38,19 @@
 											<td class="center">${cartInItem.price}円</td>
 										</tr>
 									</c:forEach>
-									<tr>
 
+									<tr>
 										<td class="center">${bdb.deliveryMethodName}</td>
 										<td class="center"></td>
 										<td class="center">${bdb.deliveryMethodPrice}円</td>
 									</tr>
+
 									<tr>
 										<td class="center"></td>
 										<td class="center">合計</td>
 										<td class="center">${bdb.totalPrice}円</td>
 									</tr>
+
 								</tbody>
 							</table>
 						</div>
