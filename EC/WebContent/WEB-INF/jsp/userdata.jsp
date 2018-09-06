@@ -62,17 +62,19 @@
 								</tr>
 							</thead>
 							<tbody>
+<c:forEach var = "resultBDB" items = "${a}">
 								<tr>
 									<td class="center"><a href="UserBuyHistoryDetail?buy_id=1" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
-									<td class="center">${a.formatDate}</td>
-									<td class="center">${a.deliveryMethodName}</td>
-									<td class="center">${a.totalPrice}円</td>
+									<td class="center">${resultBDB.formatDate}</td>
+									<td class="center">${resultBDB.deliveryMethodName}</td>
+									<td class="center">${resultBDB.totalPrice}円</td>
 								</tr>
+</c:forEach>
 								<tr>
 									<td class="center"><a href="UserBuyHistoryDetail?buy_id=2" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
-									<td class="center">formatDate</td>
-									<td class="center">deliveryMethodName</td>
-									<td class="center">totalPrice円</td>
+									<td class="center">${resultBDB.formatDate}</td>
+									<td class="center">${resultBDB.deliveryMethodName}</td>
+									<td class="center">${resultBDB.totalPrice}円</td>
 								</tr>
 
 							</tbody>

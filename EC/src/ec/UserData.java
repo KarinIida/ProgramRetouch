@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.BuyDataBeans;
+import beans.ItemDataBeans;
 import beans.UserDataBeans;
+import dao.BuyDAO;
 import dao.UserDAO;
 
 /**
@@ -34,7 +36,28 @@ public class UserData extends HttpServlet {
 			// 更新確認画面から戻ってきた場合Sessionから取得。それ以外はuserIdでユーザーを取得
 			UserDataBeans udb = session.getAttribute("returnUDB") == null ? UserDAO.getUserDataBeansByUserId(userId) : (UserDataBeans) EcHelper.cutSessionAttribute(session, "returnUDB");
 
-			ArrayList<BuyDataBeans> a = new ArrayList<BuyDataBeans>();
+
+			// セッションからカート情報を取得
+			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) EcHelper.cutSessionAttribute(session, "cart");
+
+			BuyDataBeans bdb = (BuyDataBeans) EcHelper.cutSessionAttribute(session, "bdb");
+
+//			登録はしてあるけど、buyIdをどうにかしないといけない
+//			// 購入情報を登録
+//			int buyId = BuyDAO.insertBuy(bdb);
+//			// 購入詳細情報を購入情報IDに紐づけして登録
+//			for (ItemDataBeans cartInItem : cart) {
+//				BuyDetailDataBeans bddb = new BuyDetailDataBeans();
+//				bddb.setBuyId(buyId);
+//				bddb.setItemId(cartInItem.getId());
+//				BuyDetailDAO.insertBuyDetail(bddb);
+//			}
+
+			/* ====購入完了ページ表示用==== */
+			BuyDataBeans resultBDB = BuyDAO.getBuyDataBeansByBuyId(userId);
+			request.setAttribute("resultBDB", resultBDB);
+
+			ArrayList<BuyDataBeans> a = (ArrayList<BuyDataBeans>) EcHelper.cutSessionAttribute(session, "a");
 
 //			買い物カゴ
 //			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
@@ -54,6 +77,7 @@ public class UserData extends HttpServlet {
 //			int buyId = BuyDAO.insertBuy(bdb);
 //			BuyDataBeans a = BuyDAO.getBuyDataBeansByBuyId(buyId);
 //			request.setAttribute("a", a);
+
 
 			// 入力された内容に誤りがあったとき等に表示するエラーメッセージを格納する
 			String validationMessage = (String) EcHelper.cutSessionAttribute(session, "validationMessage");
