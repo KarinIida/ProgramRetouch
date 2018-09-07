@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import base.DBManager;
+import beans.BuyDataBeans;
 import beans.BuyDetailDataBeans;
 import beans.ItemDataBeans;
 
@@ -130,5 +131,36 @@ public class BuyDetailDAO {
 			}
 		}
 	}
+//	sql select join t_buyのteble dao追加 parameter
+	public static ArrayList<BuyDataBeans> getBuyDataBeans(int buyId) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
 
+			st = con.prepareStatement("SELECT * FROM t_buy JOIN t_buy_detail ON t_buy.id = t_buy_detail.id WHERE buy_id = ?");
+			st.setInt(1, buyId);
+
+			ResultSet rs = st.executeQuery();
+			ArrayList<BuyDataBeans> buyDateList = new ArrayList<BuyDataBeans>();
+
+			while (rs.next()) {
+				BuyDataBeans bdb = new BuyDataBeans();
+				bdb.setTotalPrice(rs.getInt("total_price"));
+				bdb.setFormatDate(rs.getDate("create_date"));
+				bdb.setDeliveryMethodName(rs.getString("delivery_method_id"));
+				buyDateList.add(bdb);
+			}
+
+			System.out.println("searching !BuyDataBeansList! by BuyID has been completed");
+			return buyDateList;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
 }

@@ -52,21 +52,15 @@
 								</tr>
 							</thead>
 							<tbody>
+<c:forEach var="buyIDB" items="${buyIDBList}" >
+									<tr>
+										<td class="center">${buyIDB.name}</td>
+										<td class="center">${buyIDB.price}円</td>
+									</tr>
+</c:forEach>
 								<tr>
-									<td class="center">サンプル商品名1</td>
-									<td class="center">111111111円</td>
-								</tr>
-								<tr>
-									<td class="center">サンプル商品名2</td>
-									<td class="center">222222222円</td>
-								</tr>
-								<tr>
-									<td class="center">サンプル商品名3</td>
-									<td class="center">333333333円</td>
-								</tr>
-								<tr>
-									<td class="center">サンプル</td>
-									<td class="center">123456789円</td>
+									<td class="center">${resultBDB.deliveryMethodName}</td>
+									<td class="center">${resultBDB.deliveryMethodPrice}円</td>
 								</tr>
 							</tbody>
 						</table>
