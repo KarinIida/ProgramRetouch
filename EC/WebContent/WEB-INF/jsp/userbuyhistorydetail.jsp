@@ -28,11 +28,13 @@
 								</tr>
 							</thead>
 							<tbody>
+
 								<tr>
-									<td class="center">${resultBDB.formatDate}</td>
+									<td class="center">${resultBDB.buyDate}</td>
 									<td class="center">${resultBDB.deliveryMethodName}</td>
 									<td class="center">${resultBDB.totalPrice}円</td>
 								</tr>
+
 							</tbody>
 						</table>
 					</div>
@@ -52,15 +54,15 @@
 								</tr>
 							</thead>
 							<tbody>
-<c:forEach var="buyIDB" items="${buyIDBList}" >
+
 									<tr>
 										<td class="center">${buyIDB.name}</td>
 										<td class="center">${buyIDB.price}円</td>
 									</tr>
-</c:forEach>
+
 								<tr>
-									<td class="center">${resultBDB.deliveryMethodName}</td>
-									<td class="center">${resultBDB.deliveryMethodPrice}円</td>
+									<td class="center">${buyIDB.deliveryMethodName}</td>
+									<td class="center">${buyIDB.deliveryMethodPrice}円</td>
 								</tr>
 							</tbody>
 						</table>

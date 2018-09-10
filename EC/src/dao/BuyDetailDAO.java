@@ -138,22 +138,59 @@ public class BuyDetailDAO {
 		try {
 			con = DBManager.getConnection();
 
-			st = con.prepareStatement("SELECT * FROM t_buy JOIN t_buy_detail ON t_buy.id = t_buy_detail.id WHERE buy_id = ?");
+			st = con.prepareStatement("SELECT * FROM t_buy INNER JOIN  m_delivery_method ON t_buy.delivery_method_id = m_delivery_method.id WHERE user_id = ?");
+// "SELECT * FROM t_buy_detail INNER JOIN m_item ON t_buy_detail.item_id = m_item.id WHERE buy_id = ?"
 			st.setInt(1, buyId);
 
 			ResultSet rs = st.executeQuery();
 			ArrayList<BuyDataBeans> buyDateList = new ArrayList<BuyDataBeans>();
-
+// buydate 結合 deliveryname
 			while (rs.next()) {
 				BuyDataBeans bdb = new BuyDataBeans();
+				bdb.setId(rs.getInt("id"));
+				bdb.setBuyDate(rs.getDate("create_date"));
 				bdb.setTotalPrice(rs.getInt("total_price"));
-				bdb.setFormatDate(rs.getDate("create_date"));
-				bdb.setDeliveryMethodName(rs.getString("delivery_method_id"));
+				bdb.setDeliveryMethodName(rs.getString("m_delivery_method.name"));
+				bdb.setDeliveryMethodPrice(rs.getInt("m_delivery_method.price"));
 				buyDateList.add(bdb);
 			}
 
 			System.out.println("searching !BuyDataBeansList! by BuyID has been completed");
 			return buyDateList;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+	public static ArrayList<BuyDataBeans> BuyItemDateDetail(int buyId) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
+			st = con.prepareStatement("SELECT * FROM t_buy_detail INNER JOIN m_item ON t_buy_detail.item_id = m_item.id WHERE buy_id = ?");
+			st.setInt(1, buyId);
+
+			ResultSet rs = st.executeQuery();
+			ArrayList<BuyDataBeans> BuyItemDateDetailList = new ArrayList<BuyDataBeans>();
+
+			while (rs.next()) {
+				BuyDataBeans bdb = new BuyDataBeans();
+//				bdb.setId(rs.getInt("id"));
+//				bdb.setBuyDate(rs.getDate("create_date"));
+//				bdb.setTotalPrice(rs.getInt("total_price"));
+//				bdb.setDeliveryMethodName(rs.getString("m_delivery_method.name"));
+//				bdb.setDeliveryMethodPrice(rs.getInt("m_delivery_method.price"));
+				bdb.setName(rs.getString("m_item.name"));
+				bdb.setPrice(rs.getInt("m_item.price"));
+				BuyItemDateDetailList.add(bdb);
+			}
+
+			System.out.println("searching !!BuyDataBeansList!! by BuyID has been completed");
+			return BuyItemDateDetailList;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new SQLException(e);

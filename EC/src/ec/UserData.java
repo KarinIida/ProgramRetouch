@@ -37,7 +37,7 @@ public class UserData extends HttpServlet {
 			UserDataBeans udb = session.getAttribute("returnUDB") == null ? UserDAO.getUserDataBeansByUserId(userId) : (UserDataBeans) EcHelper.cutSessionAttribute(session, "returnUDB");
 
 
-
+//			BuyDetailDataBeans.setBuyId;
 			/* ====購入完了ページ表示用==== */
 			BuyDataBeans resultBDB = BuyDAO.getBuyDataBeansByBuyId(userId);
 			request.setAttribute("resultBDB", resultBDB);
