@@ -148,11 +148,11 @@ public class BuyDetailDAO {
 			while (rs.next()) {
 				BuyDataBeans bdb = new BuyDataBeans();
 				bdb.setId(rs.getInt("id"));
-				bdb.setBuyDate(rs.getDate("create_date"));
+				bdb.setBuyDate(rs.getTimestamp("create_date"));
 				bdb.setTotalPrice(rs.getInt("total_price"));
 				bdb.setDeliveryMethodName(rs.getString("m_delivery_method.name"));
 				bdb.setDeliveryMethodPrice(rs.getInt("m_delivery_method.price"));
-				buyDateList.add(bdb);
+				buyDateList.add(0,bdb);
 			}
 
 			System.out.println("searching !BuyDataBeansList! by BuyID has been completed");
@@ -166,27 +166,23 @@ public class BuyDetailDAO {
 			}
 		}
 	}
-	public static ArrayList<BuyDataBeans> BuyItemDateDetail(int buyId) throws SQLException {
+	public static ArrayList<ItemDataBeans> BuyItemDateDetail(int buyId) throws SQLException {
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
 			con = DBManager.getConnection();
-			st = con.prepareStatement("SELECT * FROM t_buy_detail INNER JOIN m_item ON t_buy_detail.item_id = m_item.id WHERE buy_id = ?");
+			st = con.prepareStatement("SELECT m_item.id, m_item.name, m_item.price FROM t_buy_detail INNER JOIN m_item ON t_buy_detail.item_id = m_item.id WHERE buy_id = ?");
 			st.setInt(1, buyId);
 
 			ResultSet rs = st.executeQuery();
-			ArrayList<BuyDataBeans> BuyItemDateDetailList = new ArrayList<BuyDataBeans>();
+			ArrayList<ItemDataBeans> BuyItemDateDetailList = new ArrayList<ItemDataBeans>();
 
 			while (rs.next()) {
-				BuyDataBeans bdb = new BuyDataBeans();
-//				bdb.setId(rs.getInt("id"));
-//				bdb.setBuyDate(rs.getDate("create_date"));
-//				bdb.setTotalPrice(rs.getInt("total_price"));
-//				bdb.setDeliveryMethodName(rs.getString("m_delivery_method.name"));
-//				bdb.setDeliveryMethodPrice(rs.getInt("m_delivery_method.price"));
-				bdb.setName(rs.getString("m_item.name"));
-				bdb.setPrice(rs.getInt("m_item.price"));
-				BuyItemDateDetailList.add(bdb);
+				ItemDataBeans idb = new ItemDataBeans();
+					idb.setId(rs.getInt("id"));
+					idb.setName(rs.getString("name"));
+					idb.setPrice(rs.getInt("price"));
+				BuyItemDateDetailList.add(idb);
 			}
 
 			System.out.println("searching !!BuyDataBeansList!! by BuyID has been completed");

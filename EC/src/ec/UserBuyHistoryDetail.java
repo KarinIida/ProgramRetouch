@@ -38,12 +38,19 @@ public class UserBuyHistoryDetail extends HttpServlet {
 
 			BuyDataBeans resultBDB = BuyDAO.getBuyDataBeansByBuyId(buyId);
 			request.setAttribute("resultBDB", resultBDB);
+//sql dao buy_id
+			ArrayList<ItemDataBeans> buyIDD = BuyDetailDAO.BuyItemDateDetail(buyId);
+			request.setAttribute("buyIDD", buyIDD);
 
-			ArrayList<BuyDataBeans> a = BuyDetailDAO.getBuyDataBeans(userId);
-			request.setAttribute("a", a);
+			ItemDataBeans b = BuyDAO.getItemDataBeansByBuyId(buyId);
+			request.setAttribute("b", b);
 
-			ArrayList<ItemDataBeans> buyIDBList = BuyDetailDAO.getItemDataBeansListByBuyId(buyId);
-			request.setAttribute("buyIDBList", buyIDBList);
+//			DeliveryMethodDataBeans userSelectDMB = DeliveryMethodDAO.getDeliveryMethodDataBeansByID(buyId);
+//			BuyDataBeans bdb = new BuyDataBeans();
+//			bdb.setUserId((int) session.getAttribute("userId"));
+//			bdb.setDelivertMethodId(userSelectDMB.getId());
+//			bdb.setDeliveryMethodName(userSelectDMB.getName());
+//			bdb.setDeliveryMethodPrice(userSelectDMB.getPrice());
 
 //el式 buyIDBList
 		} catch (Exception e) {
